@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/davidalves1/missas-sao-pedro#readme",
   "dependencies": {
+    "flatpickr": "^2.2.4",
     "materialize-css": "^0.97.8"
   },
   "devDependencies": {
