@@ -6,15 +6,15 @@ let datepicker_nav = document.querySelector("#flatpickr-nav");
 datepicker.flatpickr({
 	locale: 'pt',
 	inline: true, // show the calendar inline
-	altInput: true, 
-	altFormat: 'd/m/Y'
+	defaultDate: new Date()
 });
 
 datepicker_nav.flatpickr({
-	locale: 'pt'
+	locale: 'pt',
+	defaultDate: new Date()
 });
 
-var ajax = function(url, method, callback, data) { 
+var ajax = function(url, method, data, callback) { 
 	
 	var xhr = new XMLHttpRequest();
 	xhr.open(method, url, true);
@@ -38,8 +38,9 @@ var ajax = function(url, method, callback, data) {
 	xhr.send(data);
 };
 
-function handleResponse(obj) {
-	console.log(obj);
-}
-
-ajax('http://localhost:5000/api/eventos/error', 'GET', handleResponse, {});
+ajax('https://api.github.com/users/davidalves1', 'GET', {}, function(data) {
+	if (data.status !== 200)
+		console.log('Error ' + data.status);
+	else
+		console.log('Sucesso!');
+});
