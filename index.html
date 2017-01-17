@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Horário das Missas</title>
+	<title>Enventos</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -14,25 +14,53 @@
 <body>
 	<nav>
 		<div class="nav-wrapper indigo darken-1">
-			<a href="#" class="brand-logo ml-2">Missas</a>
+			<a href="#" class="brand-logo ml-2 hide-on-med-and-down">Eventos Paróquia São Pedro</a>
+			<a href="#" class="brand-logo ml-2 hide-on-large-only">Eventos</a>
 			<ul class="right hide-on-large-only">
-				<li><a href="#" ><i class="material-icons">view_module</i></a></li>
+				<li><a href="#" id="flatpickr-nav"><i class="material-icons">view_module</i></a></li>
 			</ul>
 		</div>
 	</nav>
 	<div class="container">
 		<div class="row">
 			<div class="col offset-m2 s12 m4 hide-on-med-and-down">
-				<input id="flatpickr" type="text" placeholder="Select Date..">
+				<div id="flatpickr" class="mt-2"></div>
 			</div>
-			<div class="col s12 m4" style="background-color: #ddd">
-				<h1>right</h1>
+			<div class="col s12 m4">
+				<table class="mt-2">
+					<thead>
+						<tr>
+							<th data-field="id">Name</th>
+							<th data-field="name">Item Name</th>
+							<th data-field="price">Item Price</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr>
+							<td>Alvin</td>
+							<td>Eclair</td>
+							<td>$0.87</td>
+						</tr>
+						<tr>
+							<td>Alan</td>
+							<td>Jellybean</td>
+							<td>$3.76</td>
+						</tr>
+						<tr>
+							<td>Jonathan</td>
+							<td>Lollipop</td>
+							<td>$7.00</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
 	<div class="footer"></div>
 	<script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
 	<script src="node_modules/flatpickr/dist/flatpickr.min.js"></script>
+	<script src="node_modules/flatpickr/dist/l10n/pt.js"></script>
 	<script src="dist/js/app.min.js"></script>
 </body>
 </html>
