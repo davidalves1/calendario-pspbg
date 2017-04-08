@@ -6,91 +6,70 @@ let datepicker_nav = document.querySelector("#flatpickr-nav");
 datepicker.flatpickr({
 	locale: 'pt',
 	inline: true, // show the calendar inline
-	defaultDate: new Date()
+	defaultDate: new Date(),
+	onReady: readyDate,
+	onChange: changeDate
 });
 
 datepicker_nav.flatpickr({
 	locale: 'pt',
-	defaultDate: new Date()
+	defaultDate: new Date(),
+	onReady: readyDate,
+	onChange: changeDate
 });
 
-let ajax = function(config, callback) { 
-	
-	const xhr = new XMLHttpRequest();
-	
-	xhr.open(config.method, config.url, true);
-	xhr.setRequestHeader('Content-Type', 'application/json');
-	xhr.onload = function (e) {
-		if (xhr.readyState === 4) {
-			callback({
-				status: xhr.status,
-				response: xhr.responseText
-			});
-		}
-	};
-
-	xhr.onerror = function (e) {
-		callback({
-			status: xhr.status,
-			response: xhr.statusText
-		});
-	};
-
-	xhr.send(config.data);
-};
-
-const config = {
-	url: 'https://api.github.com/users/davidalves1',
-	method: 'GET',
-	data: {}
+function changeDate(selectedDates, dateStr) {
+    return getEvents(dateStr);
 }
 
-ajax(config, function(data) {
-	if (200 !== data.status)
-		console.log(`Error - status: ${data.status}, response: ${data.response}`);
-	else
-		console.log('Sucesso!');
-});
+function readyDate(selectedDates, dateStr) {
+    return getEvents(dateStr);
+}
 
-let result = [
-	{
-		id: 1,
-		date: '2017-03-01T19:00:00',
-		description: 'Missa de Cinzas - Pe. Luismar'
-	},
-	{
-		id: 2,
-		date: '2017-03-05T19:00:00',
-		description: 'Missa de Quaresma - Pe. Malvino \n\n A única área que eu acho, que vai exigir muita atenção nossa, e aí eu já aventei a hipótese de até criar um ministério. É na área de... Na área... Eu diria assim, como uma espécie de analogia com o que acontece na área agrícola.'
-	}
-];
+function getEvents(date) {
+	fetch('./events.json')
+		.then(response => response.json())
+		.then(events => showEvents(events, date))
+		.catch(err => []);
+}
 
-let table = `
-	<table class="mt-2">
-		<thead>
-			<tr>
-				<th data-field="time">Hora</th>
-				<th data-field="description">Descrição</th>
-			</tr>
-		</thead>
-		<tbody>
-`;
+function showEvents(events, date) {
+	let result = events.filter((element) => {
+		return element.date.indexOf(date) !== -1;
+	})
 
-result.forEach(function(item, key) {
-	let time = formatTime(item.date);
-
-	table += `
-		<tr>
-			<td>${time}</td>
-			<td>${item.description}</td>
-		</tr>
+	let table = `
+		<table class="mt-2 striped">
+			<thead>
+				<tr>
+					<th data-field="time" style="text-align: left;">Hora</th>
+					<th data-field="description" style="text-align: left;">Descrição</th>
+				</tr>
+			</thead>
+			<tbody>
 	`;
-});
 
-table += `</tbody></table>`;
+	result.forEach(function(item, key) {
+		let time = formatTime(item.date);
+
+		table += `
+			<tr>
+				<td>${time}</td>
+				<td>${item.description}</td>
+			</tr>
+		`;
+	});
+
+	table += `</tbody></table>`;
+
+	document.querySelector('#lista-eventos').innerHTML = table;
+}
 
 function formatTime(date) {
-	let new_date = new Date(date);
+	let time_zone = `-0${new Date().getTimezoneOffset() / 60}:00`;
+
+	// Passa o time_zone local `-03:00` ou `-02:00` (horário de verão)  
+	let new_date = new Date(`${date}${time_zone}`);
 
 	let hora = new_date.getHours();
 	hora = 1 === hora.toString().length ? '0' + hora : hora;
@@ -103,5 +82,3 @@ function formatTime(date) {
 
 	return `${hora}:${minuto}`;
 }
-
-document.querySelector('#lista-eventos').innerHTML = table;
