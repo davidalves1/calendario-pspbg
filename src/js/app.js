@@ -1,7 +1,7 @@
 'use strict';
 
-let datepicker = document.querySelector("#flatpickr");
-let datepicker_nav = document.querySelector("#flatpickr-nav");
+const datepicker = document.querySelector("#flatpickr");
+const datepicker_nav = document.querySelector("#flatpickr-nav");
 
 datepicker.flatpickr({
 	locale: 'pt',
@@ -34,7 +34,7 @@ function getEvents(date) {
 }
 
 function showEvents(events, date) {
-	let result = events.filter((element) => {
+	const result = events.filter((element) => {
 		return element.date.indexOf(date) !== -1;
 	})
 
@@ -42,12 +42,12 @@ function showEvents(events, date) {
 		<table class="mt-2 striped">
 			<thead>
 				<tr>
-					<th data-field="time" style="text-align: left;">Hora</th>
-					<th data-field="description" style="text-align: left;">Descrição</th>
+					<th data-field="time">Hora</th>
+					<th data-field="description">Descrição</th>
 				</tr>
 			</thead>
 			<tbody>
-	`;
+	`; 
 
 	result.forEach(function(item, key) {
 		let time = formatTime(item.date);
@@ -66,10 +66,10 @@ function showEvents(events, date) {
 }
 
 function formatTime(date) {
-	let time_zone = `-0${new Date().getTimezoneOffset() / 60}:00`;
+	const time_zone = `-0${new Date().getTimezoneOffset() / 60}:00`;
 
 	// Passa o time_zone local `-03:00` ou `-02:00` (horário de verão)  
-	let new_date = new Date(`${date}${time_zone}`);
+	const new_date = new Date(`${date}${time_zone}`);
 
 	let hora = new_date.getHours();
 	hora = 1 === hora.toString().length ? '0' + hora : hora;
