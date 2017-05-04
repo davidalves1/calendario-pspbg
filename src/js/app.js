@@ -28,7 +28,7 @@ function readyDate(selectedDates, dateStr) {
 }
 
 function getEvents(date) {
-	fetch('./events.json')
+	fetch('/assets/events.json')
 		.then(response => response.json())
 		.then(events => showEvents(events, date))
 		.catch(err => []);
