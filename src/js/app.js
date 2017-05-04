@@ -14,6 +14,7 @@ datepicker.flatpickr({
 datepicker_nav.flatpickr({
 	locale: 'pt',
 	defaultDate: new Date(),
+	disableMobile: "true",
 	onReady: readyDate,
 	onChange: changeDate
 });
