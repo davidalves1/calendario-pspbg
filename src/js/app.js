@@ -62,7 +62,10 @@ function showEvents(events, date) {
 
 	table += `</tbody></table>`;
 
-	document.querySelector('#lista-eventos').innerHTML = table;
+	if (0 === result.length)
+		document.querySelector('#lista-eventos').innerHTML = `<div class="center-align mt-10"><h5>Nenhum evento para esta data</h5></div>`;
+	else
+		document.querySelector('#lista-eventos').innerHTML = table;
 }
 
 function formatTime(date) {
