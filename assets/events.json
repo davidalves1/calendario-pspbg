@@ -26,7 +26,22 @@
 	},
 	{
 		"id": 6,
-		"date": "2017-04-15T19:00:00",
-		"description": "Sábado de Aleluia - Pe. Malvino"
+		"date": "2017-05-07T07:00:00",
+		"description": "Missa - Pe. Luismar"
+	},
+	{
+		"id": 7,
+		"date": "2017-05-07T19:00:00",
+		"description": "Missa - Pe. Malvino"
+	},
+	{
+		"id": 8,
+		"date": "2017-05-14T07:00:00",
+		"description": "Missa - Pe. Malvino"
+	},
+	{
+		"id": 9,
+		"date": "2017-05-14T19:00:00",
+		"description": "Missa do Dia das Mães - Pe. Luismar"
 	}
 ]
