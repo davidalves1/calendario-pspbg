@@ -28,10 +28,10 @@ function readyDate(selectedDates, dateStr) {
 }
 
 function getEvents(date) {
-	fetch('/assets/events.json')
+	fetch('../assets/events.json')
 		.then(response => response.json())
 		.then(events => showEvents(events, date))
-		.catch(err => []);
+		.catch(err => noEvents());
 }
 
 function showEvents(events, date) {
@@ -64,7 +64,7 @@ function showEvents(events, date) {
 	table += `</tbody></table>`;
 
 	if (0 === result.length)
-		document.querySelector('#lista-eventos').innerHTML = `<div class="center-align mt-10"><h5>Nenhum evento para esta data</h5></div>`;
+		noEvents();
 	else
 		document.querySelector('#lista-eventos').innerHTML = table;
 }
@@ -85,4 +85,8 @@ function formatTime(date) {
 	segundo = 1 === segundo.toString().length ? '0' + segundo : segundo;
 
 	return `${hora}:${minuto}`;
+}
+
+const noEvents = () => {
+	document.querySelector('#lista-eventos').innerHTML = `<div class="center-align mt-10"><h5>Nenhum evento para esta data</h5></div>`;
 }
