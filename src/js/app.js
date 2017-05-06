@@ -28,17 +28,19 @@ function readyDate(selectedDates, dateStr) {
 }
 
 function getEvents(date) {
-	fetch('../assets/events.json')
+	const config = {
+		method: 'get',
+		mode: 'cors',
+		header: new Headers({'Content-Type': 'application/json'})
+	}
+
+	fetch(`http://api-pspbg.azurewebsites.net/v1/events/${date}`, config)
 		.then(response => response.json())
 		.then(events => showEvents(events, date))
 		.catch(err => noEvents());
 }
 
 function showEvents(events, date) {
-	const result = events.filter((element) => {
-		return element.date.indexOf(date) !== -1;
-	})
-
 	let table = `
 		<table class="mt-2 striped">
 			<thead>
@@ -48,9 +50,9 @@ function showEvents(events, date) {
 				</tr>
 			</thead>
 			<tbody>
-	`; 
+	`;
 
-	result.forEach(function(item, key) {
+	events.forEach(function(item, key) {
 		let time = formatTime(item.date);
 
 		table += `
@@ -63,19 +65,19 @@ function showEvents(events, date) {
 
 	table += `</tbody></table>`;
 
-	if (0 === result.length)
+	if (0 === events.length)
 		noEvents();
 	else
 		document.querySelector('#lista-eventos').innerHTML = table;
 }
 
 function formatTime(date) {
-	const time_zone = `-0${new Date().getTimezoneOffset() / 60}:00`;
+	const time_zone = new Date().getTimezoneOffset() / 60;
+
+	const new_date = new Date(date);
 
 	// Passa o time_zone local `-03:00` ou `-02:00` (horário de verão)  
-	const new_date = new Date(`${date}${time_zone}`);
-
-	let hora = new_date.getHours();
+	let hora = new_date.getHours() + time_zone;
 	hora = 1 === hora.toString().length ? '0' + hora : hora;
 
 	let minuto = new_date.getMinutes();
