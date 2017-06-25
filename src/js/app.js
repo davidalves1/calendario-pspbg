@@ -2,6 +2,7 @@
 
 const datepicker = document.querySelector("#flatpickr");
 const datepicker_nav = document.querySelector("#flatpickr-nav");
+const isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
 
 datepicker.flatpickr({
 	locale: 'pt',
@@ -14,10 +15,12 @@ datepicker.flatpickr({
 datepicker_nav.flatpickr({
 	locale: 'pt',
 	defaultDate: new Date(),
-	disableMobile: "true",
+	disableMobile: `${!isSafari}`, // Se for diferente de safari, desabilita o menu, pois está com problema
 	onReady: readyDate,
 	onChange: changeDate
 });
+
+console.log({disableMobile: `${isSafari}`});
 
 function changeDate(selectedDates, dateStr) {
     return getEvents(dateStr);
